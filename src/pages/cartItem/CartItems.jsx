@@ -12,8 +12,9 @@ export default function CartItems() {
 
   const dispatch = useDispatch();
 
+  // using function to handle increaseQty
   const handleIncreaseQty = (item) => {
-    dispatch(IncreaseQuantity(item));
+    dispatch(increaseQuantity(item));
   };
 
   const handleDecreaseQty = (item) => {
@@ -47,30 +48,34 @@ export default function CartItems() {
                   <div className='shrink-0'>
                     <img
                       alt='Neil image'
-                      src={item.image}
-                      style={{ width: "200px" }}
+                      src={item?.image}
+                      className='rounded-full h-10 w-10'
                     />
                   </div>
                   <div className='min-w-0 flex-1'>
                     <p className='truncate text-sm font-medium text-gray-900 dark:text-white'>
-                      {item.title}
+                      {item?.title}
                     </p>
                   </div>
                   <div className='inline-flex items-center text-base font-semibold text-gray-900 dark:text-white'>
-                    ${item && item.price}
+                    ${item && item?.price}
                   </div>
                   <div>
                     <span
-                      className='mx-1 text-2xl bg-red-600 text-white rounded-full px-1'
+                      className='mx-1 text-2xl bg-red-600 text-white rounded-full px-1 cursor-pointer'
                       onClick={() => {
                         handleDecreaseQty(item);
                       }}>
                       -
                     </span>
                     <span className='text-2xl  text-blue-700 rounded-full px-1'>
-                      {item.quantity}
+                      {item?.quantity}
                     </span>
-                    <span className='mx-1 text-2xl bg-red-600 text-white rounded-full px-1'>
+                    <span
+                      className='mx-1 text-2xl bg-red-600 text-white rounded-full px-1 cursor-pointer'
+                      onClick={() => {
+                        handleIncreaseQty(item);
+                      }}>
                       +
                     </span>
                   </div>

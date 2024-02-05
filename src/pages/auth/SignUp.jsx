@@ -1,6 +1,13 @@
 import React from "react";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import * as Yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCreateUser } from "../../redux/features/user/userSlice";
+import { useNavigate } from "react-router-dom";
+
+// vaildation file
+const FILE_SIZE = 1024 * 1024 * 1; // 10MB
+const SUPPORT_FORMAT = ["image/jpg", "image/jpeg", "image/"];
 
 // create vaildation schema
 const vaildationSchema = Yup.object({
@@ -17,6 +24,12 @@ const vaildationSchema = Yup.object({
 });
 
 export default function SignUp() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
+
+  console.log("User : " + user);
+
   return (
     <div className='flex flex-col items-center justify-between'>
       <h1 className='text-center text-4xl font-semibold text-blue-500'>
@@ -30,13 +43,17 @@ export default function SignUp() {
           email: "",
           password: "",
           confirmPassword: "",
+          avatar: "https://storage.googleapis.com/pod_public/1300/142838.jpg",
         }}
         validationSchema={vaildationSchema}
         onSubmit={(values, { setSubmitting }) => {
           console.log(values);
+          dispatch(fetchCreateUser(values));
+          setTimeout(() => {
+            navigate("/");
+          }, 100);
         }}>
         {({ isSubmitting }) => {
-          console.log(isSubmitting);
           return (
             <Form className='w-1/2'>
               {/* username */}

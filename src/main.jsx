@@ -13,6 +13,7 @@ import SignUp from "./pages/auth/SignUp.jsx";
 import { Provider } from "react-redux";
 import { store } from "./redux/store.js";
 import CartItems from "./pages/cartItem/CartItems.jsx";
+import Login from "./pages/auth/Login.jsx";
 
 // create router DOM
 const router = createBrowserRouter([
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <SignUp />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);
 

@@ -3,8 +3,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { CartIcon } from "../common/icons/Icons";
 import { useSelector } from "react-redux";
+import { Avatar } from "flowbite-react";
+import { selectAvatar } from "../../redux/features/user/userSlice";
 
 export default function NavbarComponent() {
+  const avatar = useSelector(selectAvatar);
+
   const [navbarList, setNavBarList] = useState([
     {
       title: "Home",
@@ -61,14 +65,23 @@ export default function NavbarComponent() {
           className='mr-3 h-6 sm:h-9'
           alt='Flowbite React Logo'
         />
-        <span className='self-center whitespace-nowrap text-xl font-semibold dark:text-white text-white'>
+        <span className='self-center whitespace-nowrap text-xl font-semibold dark:text-white text-white hover:bg-slate-900'>
           Flowbite React
         </span>
       </Navbar.Brand>
-      <div className='flex md:order-2'>
-        <Button>Get started</Button>
-        <Navbar.Toggle />
+      <Navbar.Link>
+        <div className='flex md:order-2'>
+          <Button as={Link} to={"/signup"}>
+            Sign Up
+          </Button>
+          <Navbar.Toggle />
+        </div>
+      </Navbar.Link>
+      {/* avatar */}
+      <div>
+        <Avatar img={avatar} rounded bordered />
       </div>
+
       <Navbar.Collapse>
         {navbarList.map((item, index) => {
           return (

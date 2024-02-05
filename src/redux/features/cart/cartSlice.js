@@ -12,48 +12,41 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     add(state, action) {
-      // check product is already in cart
       const existItem = state.items.find(
         (item) => item.id === action.payload.id
       );
       if (existItem) {
-        state.items = state.items.map((item) => {
+        state.items = state.items.map((item) =>
           item.id === action.payload.id
             ? { ...item, quantity: item.quantity + 1 }
-            : item;
-        });
+            : item
+        );
       } else {
-        state.items.push(action.payload);
+        state.items.push({ ...action.payload, quantity: 1 });
         state.total += 1;
       }
     },
     increaseQuantity(state, action) {
-      //
-      state.items = state.items.map((item) => {
+      state.items = state.items.map((item) =>
         item.id === action.payload.id
           ? { ...item, quantity: item.quantity + 1 }
-          : item;
-      });
+          : item
+      );
     },
     decreaseQuantity(state, action) {
-      //
-      state.items = state.items.map((item) => {
-        if (item.id == action.payload.id && item.quantity === 1) {
-          state.items = state.items.filter(
-            (items) => items.id !== action.payload.id
-          );
-        } else if (item.id == action.payload.id && item.quantity > 1) {
-          state.items = state.items.map((items) => {
-            items.id === action.payload.id
-              ? { ...items, quantity: items.quantity - 1 }
-              : items;
-          });
-        }
-      });
+      const item = state.items.find((i) => i.id === action.payload.id);
+      if (item.quantity === 1) {
+        state.items = state.items.filter((i) => i.id !== action.payload.id);
+      } else if (item.quantity > 1) {
+        state.items = state.items.map((i) =>
+          i.id === action.payload.id ? { ...i, quantity: i.quantity - 1 } : i
+        );
+      }
       state.total--;
     },
     removeAll(state) {
-      (state.items = []), (state.total = 0);
+      state.items = [];
+      state.total = 0;
     },
   },
 });
